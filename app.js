@@ -64,6 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    //assign functions to keyActions
+    function control(event){
+        if (event.keyCode === 37) moveLeft();
+    } 
+
+    document.addEventListener('keyup', control);
+
     //moving the tetrominos down
     timerId = setInterval(moveDown, 500 );
 
@@ -88,5 +95,54 @@ document.addEventListener('DOMContentLoaded', () => {
                 draw();
         }
     }
+
+    function  moveLeft()
+    {
+        undraw();
+
+        //if not on edge then moveLeft
+        const isAtLeftEdge = currentTetromino.some(index => (currentPosition + index) % width === 0);
+
+        if(!isAtLeftEdge)
+            currentPosition -= 1;
+
+        //if after moving, if the new tetromino contains taken then undo the effect
+        if(currentTetromino.some(index => 
+            squares[index + currentPosition].classList.contains('taken'))) {
+                currentPosition += 1;
+            }
+
+        draw();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 })
 
