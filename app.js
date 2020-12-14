@@ -64,6 +64,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    draw();
+    //moving the tetrominos down
+    timerId = setInterval(moveDown, 500 );
+
+    function moveDown() {
+        undraw();
+        currentPosition += width;
+        draw();
+        freeze();
+    }
+
+    function freeze() {
+        if(currentTetromino.some(index => 
+            squares[currentPosition + index + width].classList.contains("taken")))
+        {
+            currentTetromino.forEach(index => 
+                squares[currentPosition + index].classList.add("taken"));
+            
+                //start a new tetromino
+                randomShape = Math.floor(Math.random()*tetrominoes.length);
+                currentTetromino = tetrominoes[randomShape][randomRotation];
+                currentPosition = 4;
+                draw();
+        }
+    }
 })
 
