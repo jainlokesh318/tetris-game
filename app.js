@@ -67,9 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
     //assign functions to keyActions
     function control(event){
         if (event.keyCode === 37) moveLeft();
-        else if(event.keyCode === 38) //rotate
-            ;
-        else if(event.keyCode === 39) //moveRight
+        else if(event.keyCode === 38) 
+            rotate();
+        else if(event.keyCode === 39)
             moveRight();
         else if(event.keyCode === 40) 
             moveDown();
@@ -138,7 +138,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-
+    function rotate()
+    {
+        undraw();
+        randomRotation++;
+        if(randomRotation === currentTetromino.length)
+             randomRotation = 0;
+        currentTetromino = tetrominoes[randomShape][randomRotation];
+        draw();
+    }
 
 
 
