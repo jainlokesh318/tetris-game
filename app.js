@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const width = 10;
     let nextRandom = 0;
+    let timerId;
 
     const lTetromino = [
         [1, width+1, width*2+1, 2],
@@ -79,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keyup', control);
 
     //moving the tetrominos down
-    timerId = setInterval(moveDown, 500 );
+    //timerId = setInterval(moveDown, 500 );
 
     function moveDown() {
         undraw();
@@ -175,7 +176,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-
+    startBtn.addEventListener('click', () => {
+        if(timerId) {
+            clearInterval(timerId);
+            timerId = null;
+        }
+        else {
+            draw();
+            timerId = setInterval(moveDown, 500);
+            nextRandom = Math.floor(Math.random()*tetrominoes.length);
+            displayMiniGrid();
+        }
+    });
 
 
 
