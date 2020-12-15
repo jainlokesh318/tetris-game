@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.querySelector('#startButton');
 
     const width = 10;
+    let nextRandom = 0;
 
     const lTetromino = [
         [1, width+1, width*2+1, 2],
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentPosition = 7;
 
-    let randomRotation = Math.floor(Math.random()*(tetrominoes.length-1));
+    let randomRotation = 0;
     let randomShape = Math.floor(Math.random()*tetrominoes.length);
     let currentTetromino = tetrominoes[randomShape][randomRotation];
 
@@ -95,10 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 squares[currentPosition + index].classList.add("taken"));
             
                 //start a new tetromino
-                randomShape = Math.floor(Math.random()*tetrominoes.length);
+                randomShape = nextRandom;
+                nextRandom = Math.floor(Math.random()*tetrominoes.length);
                 currentTetromino = tetrominoes[randomShape][randomRotation];
                 currentPosition = 4;
                 draw();
+                displayMiniGrid();
         }
     }
 
@@ -148,6 +151,28 @@ document.addEventListener('DOMContentLoaded', () => {
         draw();
     }
 
+
+    const miniSquares = document.querySelectorAll('.mini-grid div');
+    const miniWidth = 4;
+    let miniIndex = 0;
+    
+    const upNextTetrominoes = [
+        [0, 1, miniWidth, miniWidth+1],
+        [0, 1, 2, 3],
+        [1, miniWidth, miniWidth+1, miniWidth+2],
+        [0, miniWidth, miniWidth+1, miniWidth*2+1],
+        [1, miniWidth+1, miniWidth*2+1, 2] 
+    ];
+
+    function displayMiniGrid() {
+        miniSquares.forEach(square => {
+            square.classList.remove('tetromino')
+        });
+        
+        upNextTetrominoes[nextRandom].forEach(index => {
+            miniSquares[miniIndex + index].classList.add('tetromino');
+        });
+    };
 
 
 
